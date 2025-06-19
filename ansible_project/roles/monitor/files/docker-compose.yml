@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  graphite:
+    image: graphiteapp/graphite-statsd
+    container_name: graphite
+    ports:
+      - "8081:80"                 # Changed from 80:80 to 8081:80
+      - "2003-2004:2003-2004"
+      - "2023-2024:2023-2024"
+      - "8125:8125/udp"
+      - "8126:8126"
+    restart: always
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "8181:3000"               # Changed from 3000:3000 to 8181:3000
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: always

@@ -1,0 +1,11 @@
+- name: Copy Dockerfile to workspace
+  copy:
+    src: /home/dhayanidhi-s/Documents/dockerProjects/Dockerfile
+    dest: /home/dhayanidhi-s/ci_cd_workspace/Dockerfile
+
+- name: Build Docker image from project
+  command: docker build -t financial-calc:v1 .
+  args:
+    chdir: /home/dhayanidhi-s/ci_cd_workspace
+
+

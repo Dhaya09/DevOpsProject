@@ -1,0 +1,4 @@
+- name: Run JUnit tests using Maven
+  command: mvn test
+  args:
+    chdir: /home/dhayanidhi-s/ci_cd_workspace

@@ -1,0 +1,6 @@
+- name: Clone local Git project repository
+  git:
+    repo: /home/dhayanidhi-s/project_repository/
+    dest: /home/dhayanidhi-s/ci_cd_workspace/
+    version: master
+    force: yes

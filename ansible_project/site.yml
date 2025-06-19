@@ -1,0 +1,11 @@
+- name: Full DevOps Pipeline for Project
+  hosts: local
+  become: false
+  roles:
+    - gitclone
+    - build
+    - test
+    - dockerize
+    - deploy
+    - monitor
+

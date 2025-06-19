@@ -1,0 +1,13 @@
+- name: Run Docker container from built image
+  docker_container:
+    name: financial-calc
+    image: financial-calc:v1
+    state: started
+    restart_policy: always
+    ports:
+      - "8182:8080"
+
+- name: Pause to allow container startup
+  pause:
+    seconds: 5
+

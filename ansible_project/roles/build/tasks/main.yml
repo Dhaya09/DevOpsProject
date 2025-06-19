@@ -1,0 +1,4 @@
+- name: Build the Java project using Maven
+  command: mvn clean package
+  args:
+    chdir: /home/dhayanidhi-s/ci_cd_workspace
