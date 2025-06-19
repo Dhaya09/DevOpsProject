@@ -1,3 +1,8 @@
+- name: Ensure target directory is removed to avoid permission issues
+  file:
+    path: /home/dhayanidhi-s/ci_cd_workspace/target
+    state: absent
+
 - name: Build the Java project using Maven
   command: mvn clean package
   args:
