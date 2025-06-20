@@ -16,3 +16,6 @@
   copy:
     content: "{{ build_number }}"
     dest: /home/dhayanidhi-s/ci_cd_workspace/last_success_build.txt
+
+- name: Tag current successful image as 'previous'
+  shell: docker tag financial-calc:build-{{ build_number }} financial-calc:previous
