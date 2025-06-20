@@ -7,3 +7,11 @@
   command: mvn clean package
   args:
     chdir: /home/dhayanidhi-s/ci_cd_workspace
+  register: build_result
+  ignore_errors: yes
+
+- name: Create rollback trigger file if build failed
+  file:
+    path: /tmp/build_failed
+    state: touch
+  when: build_result.rc != 0
