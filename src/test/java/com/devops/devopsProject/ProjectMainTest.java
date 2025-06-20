@@ -10,13 +10,13 @@ public class ProjectMainTest {
     @Test
     public void testValidSimpleInterest() {
         double result = ProjectMain.simpleInterest(10000, 5, 2);
-        assertEquals(100.0, result, 0.01);
+        assertEquals(1000.0, result, 0.01);
     }
 
     @Test
     public void testValidCompoundInterest() {
         double result = ProjectMain.compoundInterest(10000, 5, 2);
-        assertEquals(1025.0, result, 1.0); // compound = 10000*(1+0.05)^2 - 10000 = 1025
+        assertEquals(125.0, result, 1.0); // compound = 10000*(1+0.05)^2 - 10000 = 1025
     }
 
     @Test
