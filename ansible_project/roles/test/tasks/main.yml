@@ -2,3 +2,11 @@
   command: mvn test
   args:
     chdir: /home/dhayanidhi-s/ci_cd_workspace
+  register: test_result
+  ignore_errors: yes  # Allow Ansible to continue even if tests fail
+
+- name: Create rollback trigger file if tests failed
+  file:
+    path: /tmp/build_failed
+    state: touch
+  when: test_result.rc != 0
