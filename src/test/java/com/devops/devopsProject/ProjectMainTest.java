@@ -10,7 +10,7 @@ public class ProjectMainTest {
     @Test
     public void testValidSimpleInterest() {
         double result = ProjectMain.simpleInterest(10000, 5, 2);
-        assertEquals(1000.0, result, 0.01);
+        assertEquals(100.0, result, 0.01);
     }
 
     @Test
