@@ -1,6 +1,14 @@
-- name: Clone local Git project repository
+---
+
+- name: Ensure the workspace directory is removed to avoid stale code
+  file:
+    path: /var/lib/jenkins/workspace/project-pipeline/ci_cd_workspace/
+    state: absent
+
+- name: Clone the local Git project repository (with force and update)
   git:
     repo: /home/dhayanidhi-s/project_repository/
     dest: /var/lib/jenkins/workspace/project-pipeline/ci_cd_workspace/
     version: master
     force: yes
+    update: yes
