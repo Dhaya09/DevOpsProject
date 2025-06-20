@@ -1,6 +1,8 @@
 - name: Full DevOps Pipeline for Project
   hosts: local
   become: true
+  vars:
+    build_number: "{{ lookup('env', 'BUILD_NUMBER') }}"
   roles:
     - gitclone
     - build
@@ -8,4 +10,4 @@
     - dockerize
     - deploy
     - monitor
-
+    - rollback

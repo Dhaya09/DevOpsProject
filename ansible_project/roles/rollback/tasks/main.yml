@@ -1,0 +1,26 @@
+---
+- name: Check if previous Docker image exists
+  shell: docker images -q financial-calc:previous
+  register: previous_image
+  changed_when: false
+
+- name: Fail if no previous image found
+  fail:
+    msg: "No previous stable image found to rollback!"
+  when: previous_image.stdout == ""
+
+- name: Stop running financial container if exists
+  shell: docker ps -q --filter "name=financial-container"
+  register: running_container
+  changed_when: false
+
+- name: Remove running container
+  shell: docker rm -f financial-container
+  when: running_container.stdout != ""
+
+- name: Run previous Docker image
+  shell: docker run -d --name financial-container financial-calc:previous
+
+- name: Print rollback status
+  debug:
+    msg: "Rollback completed: previous Docker image deployed."
