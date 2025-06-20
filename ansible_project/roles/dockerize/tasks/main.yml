@@ -3,9 +3,16 @@
     src: /home/dhayanidhi-s/Documents/dockerProjects/Dockerfile
     dest: /home/dhayanidhi-s/ci_cd_workspace/Dockerfile
 
-- name: Build Docker image from project
-  command: docker build -t financial-calc:v1 .
+- name: Build Docker image with unique version tag and 'latest'
+  command: >
+    docker build
+    -t financial-calc:build-{{ build_number }}
+    -t financial-calc:latest
+    .
   args:
     chdir: /home/dhayanidhi-s/ci_cd_workspace
 
-
+- name: Save successful build number to file
+  copy:
+    content: "{{ build_number }}"
+    dest: /home/dhayanidhi-s/ci_cd_workspace/last_success_build.txt
