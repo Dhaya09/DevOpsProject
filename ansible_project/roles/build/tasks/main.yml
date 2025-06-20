@@ -8,10 +8,16 @@
   args:
     chdir: /home/dhayanidhi-s/ci_cd_workspace
   register: build_result
-  ignore_errors: yes
+  ignore_errors: yes  # ✅ Allow the playbook to continue even on failure
 
 - name: Create rollback trigger file if build failed
   file:
     path: /tmp/build_failed
     state: touch
-  when: build_result.rc != 0
+  when: build_result.rc != 0  # ✅ Only create this file on failure
+
+- name: Remove rollback trigger file if build succeeded
+  file:
+    path: /tmp/build_failed
+    state: absent
+  when: build_result.rc == 0  # ✅ Clean up for successful builds
