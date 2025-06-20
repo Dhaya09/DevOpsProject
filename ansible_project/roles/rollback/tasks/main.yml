@@ -1,4 +1,18 @@
 ---
+- name: Check if rollback is needed
+  stat:
+    path: /tmp/build_failed
+  register: rollback_flag
+
+- name: Skip rollback because build was successful
+  debug:
+    msg: "Build succeeded — skipping rollback."
+  when: not rollback_flag.stat.exists
+
+- name: End rollback role early if build succeeded
+  meta: end_play
+  when: not rollback_flag.stat.exists
+
 - name: Check if previous Docker image exists
   shell: docker images -q financial-calc:previous
   register: previous_image
@@ -24,3 +38,4 @@
 - name: Print rollback status
   debug:
     msg: "Rollback completed: previous Docker image deployed."
+
