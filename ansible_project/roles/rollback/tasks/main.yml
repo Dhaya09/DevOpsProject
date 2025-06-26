@@ -23,7 +23,6 @@
     name: financial-calc
     state: absent
     force_kill: true
-    purge_networks: true
   ignore_errors: yes
 
 - name: Rollback to previous Docker image (if it exists)
