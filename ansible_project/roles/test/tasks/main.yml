@@ -1,7 +1,7 @@
 - name: Run JUnit tests using Maven
   command: mvn test
   args:
-    chdir: /home/dhayanidhi-s/ci_cd_workspace
+    chdir: "{{ build_path }}"
   register: test_result
   ignore_errors: yes  # Allow Ansible to continue even if tests fail
 

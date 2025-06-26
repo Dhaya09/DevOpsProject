@@ -1,7 +1,7 @@
 - name: Copy Dockerfile to workspace
   copy:
     src: /home/dhayanidhi-s/Documents/dockerProjects/Dockerfile
-    dest: /home/dhayanidhi-s/ci_cd_workspace/Dockerfile
+    dest: "{{ build_path }}/Dockerfile"
 
 - name: Build Docker image with unique version tag and 'latest'
   command: >
@@ -10,12 +10,13 @@
     -t financial-calc:latest
     .
   args:
-    chdir: /home/dhayanidhi-s/ci_cd_workspace
+    chdir: "{{ build_path }}"
 
 - name: Save successful build number to file
   copy:
     content: "{{ build_number }}"
-    dest: /home/dhayanidhi-s/ci_cd_workspace/last_success_build.txt
+    dest: "{{ build_path }}/last_success_build.txt"
 
 - name: Tag current successful image as 'previous'
   shell: docker tag financial-calc:build-{{ build_number }} financial-calc:previous
+

@@ -6,7 +6,7 @@
 
 - name: Skip rollback because build was successful
   debug:
-    msg: "Build succeeded — skipping rollback."
+    msg: "✅ Build succeeded — skipping rollback."
   when: not rollback_flag.stat.exists
 
 - name: End rollback role early if build succeeded
@@ -18,24 +18,20 @@
   register: previous_image
   changed_when: false
 
-- name: Fail if no previous image found
-  fail:
-    msg: "No previous stable image found to rollback!"
-  when: previous_image.stdout == ""
+- name: Remove broken container (if any)
+  docker_container:
+    name: financial-calc
+    state: absent
+    force_kill: true
+    purge_networks: true
+  ignore_errors: yes
 
-- name: Stop running financial container if exists
-  shell: docker ps -q --filter "name=financial-container"
-  register: running_container
-  changed_when: false
-
-- name: Remove running container
-  shell: docker rm -f financial-container
-  when: running_container.stdout != ""
-
-- name: Run previous Docker image
-  shell: docker run -d --name financial-container financial-calc:previous
-
-- name: Print rollback status
-  debug:
-    msg: "Rollback completed: previous Docker image deployed."
-
+- name: Rollback to previous Docker image (if it exists)
+  docker_container:
+    name: financial-calc
+    image: financial-calc:previous
+    state: started
+    restart_policy: always
+    ports:
+      - "8182:8080"
+  when: previous_image.stdout != ""

@@ -1,23 +1,23 @@
 - name: Ensure target directory is removed to avoid permission issues
   file:
-    path: /home/dhayanidhi-s/ci_cd_workspace/target
+    path: "{{ build_path }}/target"
     state: absent
 
 - name: Build the Java project using Maven
   command: mvn clean package
   args:
-    chdir: /home/dhayanidhi-s/ci_cd_workspace
+    chdir: "{{ build_path }}"
   register: build_result
-  ignore_errors: yes  # ✅ Allow the playbook to continue even on failure
+  ignore_errors: yes
 
 - name: Create rollback trigger file if build failed
   file:
     path: /tmp/build_failed
     state: touch
-  when: build_result.rc != 0  # ✅ Only create this file on failure
+  when: build_result.rc != 0
 
 - name: Remove rollback trigger file if build succeeded
   file:
     path: /tmp/build_failed
     state: absent
-  when: build_result.rc == 0  # ✅ Clean up for successful builds
+  when: build_result.rc == 0

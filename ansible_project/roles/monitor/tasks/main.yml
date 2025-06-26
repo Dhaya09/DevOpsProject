@@ -1,15 +1,15 @@
 - name: Create monitoring directory inside workspace
   file:
-    path: /home/dhayanidhi-s/ci_cd_workspace/monitoring
+    path: "{{ build_path }}/monitoring"
     state: directory
     mode: '0755'
 
 - name: Copy Docker Compose file to monitoring folder
   copy:
     src: docker-compose.yml      # This looks inside roles/monitor/files/
-    dest: /home/dhayanidhi-s/ci_cd_workspace/monitoring/docker-compose.yml
+    dest: "{{ build_path }}/monitoring/docker-compose.yml"
 
 - name: Start monitoring stack with Docker Compose
   command: docker-compose up -d
   args:
-    chdir: /home/dhayanidhi-s/ci_cd_workspace/monitoring
+    chdir: "{{ build_path }}/monitoring"

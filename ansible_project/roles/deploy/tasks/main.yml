@@ -1,11 +1,21 @@
+---
+- name: Remove old financial-calc container if it exists
+  docker_container:
+    name: financial-calc
+    state: absent
+    force_kill: true
+    purge_networks: true
+  ignore_errors: yes  # In case container doesn't exist
+
 - name: Run Docker container from built image
   docker_container:
     name: financial-calc
-    image: financial-calc:v1
+    image: financial-calc:build-{{ build_number }}  # We use build-specific tag
     state: started
     restart_policy: always
     ports:
       - "8182:8080"
+    detach: true
 
 - name: Pause to allow container startup
   pause:
