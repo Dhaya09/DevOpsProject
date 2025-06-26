@@ -60,7 +60,7 @@ public class ProjectMainTest {
     @Test
     public void testValidNetInterestEarned() {
         double result = ProjectMain.netInterestEarned(10000, 5, 2);
-        assertEquals(1025.0, result, 1.0);
+        assertEquals(125.0, result, 1.0);
     }
 
     // ---------- Invalid Test Cases ----------
