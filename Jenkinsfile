@@ -10,11 +10,7 @@ pipeline {
         stage('📦 Build') {
             steps {
                 dir('ansible_project') {
-                    sh '''
-                    ansible-playbook -i inventory deploy.yml \
-                      --tags build \
-                      --extra-vars "build_path=${BUILD_PATH} build_number=${BUILD_NUMBER}"
-                    '''
+                    sh 'ansible-playbook -i inventory site.yml --tags build --extra-vars "build_path=$BUILD_PATH build_number=$BUILD_NUMBER"'
                 }
             }
         }
@@ -22,11 +18,7 @@ pipeline {
         stage('🧪 Test') {
             steps {
                 dir('ansible_project') {
-                    sh '''
-                    ansible-playbook -i inventory deploy.yml \
-                      --tags test \
-                      --extra-vars "build_path=${BUILD_PATH} build_number=${BUILD_NUMBER}"
-                    '''
+                    sh 'ansible-playbook -i inventory site.yml --tags test --extra-vars "build_path=$BUILD_PATH build_number=$BUILD_NUMBER"'
                 }
             }
         }
@@ -34,11 +26,7 @@ pipeline {
         stage('🐳 Dockerize') {
             steps {
                 dir('ansible_project') {
-                    sh '''
-                    ansible-playbook -i inventory deploy.yml \
-                      --tags dockerize \
-                      --extra-vars "build_path=${BUILD_PATH} build_number=${BUILD_NUMBER}"
-                    '''
+                    sh 'ansible-playbook -i inventory site.yml --tags dockerize --extra-vars "build_path=$BUILD_PATH build_number=$BUILD_NUMBER"'
                 }
             }
         }
@@ -46,11 +34,7 @@ pipeline {
         stage('🚀 Deploy') {
             steps {
                 dir('ansible_project') {
-                    sh '''
-                    ansible-playbook -i inventory deploy.yml \
-                      --tags deploy \
-                      --extra-vars "build_path=${BUILD_PATH} build_number=${BUILD_NUMBER}"
-                    '''
+                    sh 'ansible-playbook -i inventory site.yml --tags deploy --extra-vars "build_path=$BUILD_PATH build_number=$BUILD_NUMBER"'
                 }
             }
         }
@@ -58,11 +42,7 @@ pipeline {
         stage('📊 Monitor') {
             steps {
                 dir('ansible_project') {
-                    sh '''
-                    ansible-playbook -i inventory deploy.yml \
-                      --tags monitor \
-                      --extra-vars "build_path=${BUILD_PATH} build_number=${BUILD_NUMBER}"
-                    '''
+                    sh 'ansible-playbook -i inventory site.yml --tags monitor --extra-vars "build_path=$BUILD_PATH build_number=$BUILD_NUMBER"'
                 }
             }
         }
@@ -70,13 +50,10 @@ pipeline {
         stage('🔁 Rollback (if needed)') {
             steps {
                 dir('ansible_project') {
-                    sh '''
-                    ansible-playbook -i inventory deploy.yml \
-                      --tags rollback \
-                      --extra-vars "build_path=${BUILD_PATH} build_number=${BUILD_NUMBER}"
-                    '''
+                    sh 'ansible-playbook -i inventory site.yml --tags rollback --extra-vars "build_path=$BUILD_PATH build_number=$BUILD_NUMBER"'
                 }
             }
         }
     }
 }
+
