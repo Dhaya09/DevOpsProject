@@ -12,12 +12,12 @@ This project demonstrates a complete DevOps pipeline that automates the build, t
 | Build Tool        | Maven                                    |
 | Testing           | JUnit                                    |
 | CI/CD             | Jenkins                                  |
-| Automation        | Ansible                                  |
+| Deployment        | Kubernetes (Minikube)                    |
 | Containerization  | Docker                                   |
-| Orchestration     | Kubernetes (Minikube)                    |
+| Orchestration     | Ansible                                  |
 | Monitoring        | Collectd + Graphite + Grafana            |
 | Version Control   | Git                                      |
-| SCM Trigger       | Git Polling (SCM Polling every 2 mins)  |
+| SCM Trigger       | Git Polling (SCM Polling every 2 mins)   |
 
 ---
 
